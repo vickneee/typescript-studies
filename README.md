@@ -1,5 +1,5 @@
-# typescript-studies
+# restaurant-recommender
 
-TypeScript Studies.
+Restaurant recommender.
 
 ![Restaurants](./src/assets/restaurants.png)
