@@ -1,3 +1,5 @@
-# typescript-studies
+# typemart
 
-TypeScript Studies.
+TypeMart products.
+
+![TypeMart Products](./src/assets/products.png)
