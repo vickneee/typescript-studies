@@ -1,35 +1,128 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// create the image data
+const imageWidth = 20;
+const imageHeight = 8;
+const imageData = createImageData();
 
-function App() {
-  const [count, setCount] = useState(0)
+// draw head
+drawRectangle(0, 0, 20, 8);
+// eyes
+drawDot(7, 2);
+drawDot(12, 2);
+// smile
+drawDot(4, 4);
+drawHorizontalLine(4, 5, 12);
+drawDot(15, 4);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+// output what we drew to the console
+outputImage();
+
+function drawHorizontalLine(x: number, y: number, length: number) {
+    for (let i = 0; i < length; i++) {
+        drawDot(x + i, y);
+    }
 }
 
-export default App
+function drawVerticalLine(x: number, y: number, length: number) {
+    for (let i = 0; i < length; i++) {
+        drawDot(x, y + i);
+    }
+}
+
+function drawRectangle(
+    x: number,
+    y: number,
+    width: number,
+    height: number
+) {
+    // top
+    drawHorizontalLine(x, y, width);
+    // bottom
+    drawHorizontalLine(x, y + height - 1, width);
+    // left
+    drawVerticalLine(x, y, height);
+    // right
+    drawVerticalLine(x + width - 1, y, height);
+}
+
+function drawDot(
+    x: number,
+    y: number) {
+    if (isPointInImage(x, y)) {
+        imageData[y * imageWidth + x] = true;
+    }
+}
+
+/**
+ * Gets if the provided point is in the image.
+ * @param x - The horizontal position within
+ * the image.
+ * @param y - The vertical position within
+ * the image.
+ */
+
+function isPointInImage(x: number, y: number) {
+    return x >= 0 && x < imageWidth && y >= 0 && y < imageHeight;
+}
+
+/**
+ * Outputs the image data state to the console.
+ * @param onChar - Character to render an
+ * "on" pixel with.
+ * @param offChar - Character to render an
+ * "off" pixel with.
+ */
+function outputImage(onChar = "X", offChar = " ") {
+    let text = "";
+
+    for (let i = 0; i < imageData.length; i++) {
+        if (i > 0 && i % imageWidth === 0) {
+            text += "\n"; // new line
+        }
+
+        text += imageData[i] ? onChar : offChar;
+    }
+    return text;
+}
+
+/**
+ * Creates an array of booleans where a pixel
+ * is "on" when the value is `true` and "off"
+ * when the value is `false`.
+ *
+ * The pixel values are stored in rows
+ * (row-major order) where the index of a
+ * pixel in the array can be found via:
+ *
+ *     index = y * imageWidth + x
+ *
+ * `x` is the horizontal position in the image
+ * and `y` is the vertical position from the top
+ * left corner.
+ *
+ * Note: This function has a return type annotation
+ * of `boolean[]`. That means it's an array of
+ * booleans. We'll learn more about this in a
+ * future module.
+ */
+function createImageData(): boolean[] {
+    // create array of size `length` containing `false` values
+    const length = imageWidth * imageHeight;
+    return new Array(length).fill(false);
+}
+
+// The <pre> HTML tag is used to preserve the formatting of text as it is.
+// This includes spaces, line breaks, and tabs.
+// In the context of your pixel art application,
+// the outputImage() function returns a string that represents the image,
+// with line breaks (\n) to separate the rows of the image.
+
+const App = () => {
+    return (
+        <div>
+            <h1>Pixel Art</h1>
+            <pre>{outputImage()}</pre>
+        </div>
+    );
+}
+
+export default App;

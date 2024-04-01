@@ -1,3 +1,3 @@
-# typescript-studies
+# pixel-smile
 
-TypeScript Studies.
+Pixel smile.
