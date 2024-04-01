@@ -1,35 +1,63 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import restaurants from './Restaurants';
 
-function App() {
-  const [count, setCount] = useState(0)
+const dollarSigns = '$$';
+const deliveryTimeMax = 90;
+// Maximum distance in km set to 10 km for this example
+// This can be changed to any value depending on the user's preference
+const maxDistance = 10;
+let result : string;
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const hour: number = new Date().getHours();
+
+
+const priceBracket: number = dollarSigns.length;
+
+const filteredRestaurants = restaurants.filter((restaurant) => {
+    if (restaurant.priceBracket > priceBracket) {
+        return false;
+    }
+
+    if (restaurant.deliveryTimeMinutes > deliveryTimeMax) {
+        return false;
+    }
+
+    if (restaurant.distance > maxDistance) {
+        return false;
+    }
+
+    // Check if the restaurant is currently open
+    if (hour < restaurant.openHour || hour > restaurant.closeHour) {
+        return false;
+    }
+
+    return restaurant;
+});
+
+
+if (filteredRestaurants.length === 0) {
+    result = 'There are no restaurants available right now.';
+} else {
+    result = `We found ${filteredRestaurants.length} restaurants, the first is ${filteredRestaurants[0].name}.`;
 }
 
-export default App
+console.log(result);
+function App() {
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>Restaurants</h1>
+                <p>{result}</p>
+                {filteredRestaurants.map((restaurant, index) => (
+                    <div key={index}>
+                        <h2>{restaurant.name}</h2>
+                        <p>Price Bracket: {restaurant.priceBracket}</p>
+                        <p>Delivery Time: {restaurant.deliveryTimeMinutes} minutes</p>
+                        <p>Distance: {restaurant.distance} km</p>
+                    </div>
+                ))}
+            </header>
+        </div>
+    );
+}
+
+export default App;
