@@ -1,3 +1,3 @@
-# typescript-studies
+# unionversity
 
-TypeScript Studies.
+Unionversity.
