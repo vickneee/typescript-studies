@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {restaurants, Restaurant} from "./restaurants";
+import {orders, Order, PriceBracket} from "./orders";
+
+// Add your getMaxPrice() function below:
+function getMaxPrice(price: number) {
+    if (price < 10) {
+        return PriceBracket.Low;
+    } else if (price < 20) {
+        return PriceBracket.Medium;
+    } else {
+        return PriceBracket.High;
+    }
+}
+
+// Add your getOrders() function below:
+function getOrders(price: PriceBracket, orders: Order[][]) {
+    const filteredOrders: Order[][] = [];
+    orders.forEach(order => {
+        const filteredOrder = order.filter(item => getMaxPrice(item.price) <= price);
+        filteredOrders.push(filteredOrder);
+    });
+    return filteredOrders;
+}
+
+// Add your printOrders() function below:
+function printOrders(restaurants: Restaurant[], orders: Order[][]) {
+    orders.forEach((order, i) => {
+        console.log(`\nRestaurant: ${restaurants[i].name}`);
+        order.forEach(item => {
+            console.log(`- ${item.name}: $${item.price.toFixed(2)}`);
+        });
+    });
+}
+
+// Main
+const eligibleOrders = getOrders(PriceBracket.Low, orders);
+printOrders(restaurants, eligibleOrders);
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <>
+            <h1>Restaurant Orders</h1>
+            <div>
+                <h2>Orders</h2>
+                <ul>
+                    {orders.map((order, i) => (
+                        <li key={i}>
+                            <h3>Restaurant {i + 1}</h3>
+                            <ul>
+                                {order.map((item, j) => (
+                                    <li key={j}>
+                                        <p>{item.name}: ${item.price.toFixed(2)}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
+    )
 }
 
 export default App
