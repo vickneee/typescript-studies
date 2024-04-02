@@ -3,7 +3,7 @@ const studyGroups = [
         id: 1,
         courseId: 1,
         title: 'Improvisational Arts Lab Study Group',
-        keywords: ['improv', 'art', 'performance', 'lab'],
+        keywords: ['improvisational', 'art', 'performance', 'lab'],
         eventType: 'group',
     },
     {
