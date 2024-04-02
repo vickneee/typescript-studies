@@ -1,3 +1,5 @@
-# typescript-studies
+# restaurant-orders
 
-TypeScript Studies.
+Restaurant orders.
+
+![Restaurant Orders](./src/assets/restaurant-orders.png)
