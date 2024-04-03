@@ -1,3 +1,3 @@
-# typescript-studies
+# practice-branch
 
-TypeScript Studies.
+Practice branch.
