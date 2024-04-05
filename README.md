@@ -1,3 +1,3 @@
-# typescript-studies
+# typescript-tutorial
 
-TypeScript Studies.
+TypeScript tutorial.
