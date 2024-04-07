@@ -38,7 +38,7 @@ try {
 ## The Alternative array `[]`
 
 ```ts 
-let values: number[];copy
+let values: number[];
 ```
 
 we could use the "generics syntax" and write
