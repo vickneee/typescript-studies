@@ -1,5 +1,4 @@
-# tasks-typescript-html-css
+# react-typescript
 
-Tasks TypeScript HTML CSS with local storage.
+React TypeScript Studies.
 
-![Tasks](./src/assets/tasks.png)
