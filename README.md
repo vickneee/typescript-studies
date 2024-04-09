@@ -1,3 +1,5 @@
-# typescript-studies
+# tasks-typescript-html-css
 
-TypeScript Studies.
+Tasks TypeScript HTML CSS with local storage.
+
+![Tasks](./src/assets/tasks.png)
