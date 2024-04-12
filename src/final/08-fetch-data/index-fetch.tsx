@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 const url = 'https://www.course-api.com/react-tours-project';
 import { type Tour, tourSchema } from './types';
+
 function Component() {
   // tours
   const [tours, setTours] = useState<Tour[]>([]);
